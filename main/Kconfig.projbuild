@@ -34,7 +34,7 @@ menu "TH Sensor Device Configuration"
         config SENSOR_5
             bool "TH_YR - Yellow room 819F"
             help
-                Device ID: 4008
+                Device ID: 4004
                 Device Name: TH_YR
                 Location: Yellow room 819F
     endchoice
@@ -45,7 +45,7 @@ menu "TH Sensor Device Configuration"
         default 4001 if SENSOR_2
         default 4002 if SENSOR_3
         default 4003 if SENSOR_4
-        default 4008 if SENSOR_5
+        default 4004 if SENSOR_5
 
     config DEVICE_DESCRIPTION
         string
