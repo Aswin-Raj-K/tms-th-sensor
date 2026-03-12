@@ -1,4 +1,5 @@
 #include "https_client.h"
+#include "esp_time.h"
 
 static const char *TAG = "https_client";
 SemaphoreHandle_t xMutex = NULL;
@@ -198,11 +199,6 @@ void send_alarm_triggers(esp_tls_t *tls, cJSON *triggers_array){
     cJSON_AddNumberToObject(info, KEY_DEVICE_ID, DEVICE_ID);
     cJSON_AddStringToObject(info, KEY_DEVICE_NAME, DEVICE_NAME);
     cJSON_AddNumberToObject(info, KEY_TIME, get_time());
-    time_t now;
-    time(&now); // Get current time
-    uint32_t time = (uint32_t)now;
-
-    cJSON_AddNumberToObject(info, KEY_TIME, time);
     
 
     cJSON_AddItemToObject(root, KEY_TRIGGERS, triggers_array);
