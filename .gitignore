@@ -1,0 +1,30 @@
+# ESP-IDF / CMake build output
+build/
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# IDE / editor files
+.vscode/
+.idea/
+
+# OS / misc
+.DS_Store
+Thumbs.db
+
+# Backup and local config leftovers
+sdkconfig.old
+*.tmp
+*.bak
