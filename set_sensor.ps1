@@ -3,32 +3,45 @@
 
 param(
     [Parameter(Mandatory=$false)]
-    [ValidateRange(1,5)]
     [int]$SensorId
 )
 
-$sensors = @{
-    1 = @{Name="TH_GR"; Description="Gowning room 819 A"; Id=4000}
-    2 = @{Name="TH_DR"; Description="Deposition room 819C"; Id=4001}
-    3 = @{Name="TH_ER"; Description="Etch room 819D"; Id=4002}
-    4 = @{Name="TH_EBLR"; Description="EBL room 819E"; Id=4003}
-    5 = @{Name="TH_YR"; Description="Yellow room 819F"; Id=4004}
+# Load devices from JSON file
+$devicesJsonPath = Join-Path $PSScriptRoot "devices.json"
+if (-not (Test-Path $devicesJsonPath)) {
+    Write-Host "Error: devices.json not found at $devicesJsonPath" -ForegroundColor Red
+    exit 1
+}
+
+$devicesData = Get-Content $devicesJsonPath | ConvertFrom-Json
+$sensors = @{}
+$maxSensorId = 0
+
+foreach ($device in $devicesData.devices) {
+    $sensors[$device.id] = @{
+        Name = $device.name
+        Description = $device.description
+        Id = $device.device_id
+    }
+    if ($device.id -gt $maxSensorId) {
+        $maxSensorId = $device.id
+    }
 }
 
 if (-not $SensorId) {
     Write-Host "`nAvailable Sensors:" -ForegroundColor Cyan
     Write-Host "==================" -ForegroundColor Cyan
-    foreach ($key in 1..5) {
+    foreach ($key in 1..$maxSensorId) {
         $s = $sensors[$key]
         Write-Host "$key. $($s.Name) - $($s.Description) (ID: $($s.Id))"
     }
     Write-Host ""
-    $SensorId = Read-Host "Select sensor (1-5)"
+    $SensorId = Read-Host "Select sensor (1-$maxSensorId)"
     $SensorId = [int]$SensorId
 }
 
-if ($SensorId -lt 1 -or $SensorId -gt 5) {
-    Write-Host "Error: Invalid sensor ID. Must be 1-5." -ForegroundColor Red
+if ($SensorId -lt 1 -or $SensorId -gt $maxSensorId) {
+    Write-Host "Error: Invalid sensor ID. Must be 1-$maxSensorId." -ForegroundColor Red
     exit 1
 }
 
@@ -56,7 +69,7 @@ if (Test-Path $sdkconfigPath) {
     
     foreach ($line in $content) {
         # Remove old sensor selections
-        if ($line -match "^CONFIG_SENSOR_[1-5]=") {
+        if ($line -match "^CONFIG_SENSOR_\d+=") {
             continue
         }
         $newContent += $line

@@ -8,15 +8,35 @@ menu "TH Sensor Device Configuration"
             This can also be set via SENSOR_ID environment variable (1-5).
 
         config SENSOR_1
-            bool "Sensor 1 - Gowning room 819 A"
+            bool "TH_GR - Gowning room 819 A"
+            help
+                Device ID: 4000
+                Device Name: TH_GR
+                Location: Gowning room 819 A
         config SENSOR_2
-            bool "Sensor 2 - Deposition room 819C"
+            bool "TH_DR - Deposition room 819C"
+            help
+                Device ID: 4001
+                Device Name: TH_DR
+                Location: Deposition room 819C
         config SENSOR_3
-            bool "Sensor 3 - Etch room 819D"
+            bool "TH_ER - Etch room 819D"
+            help
+                Device ID: 4002
+                Device Name: TH_ER
+                Location: Etch room 819D
         config SENSOR_4
-            bool "Sensor 4 - EBL room 819E"
+            bool "TH_EBLR - EBL room 819E"
+            help
+                Device ID: 4003
+                Device Name: TH_EBLR
+                Location: EBL room 819E
         config SENSOR_5
-            bool "Sensor 5 - Yellow room 819F"
+            bool "TH_YR - Yellow room 819F"
+            help
+                Device ID: 4008
+                Device Name: TH_YR
+                Location: Yellow room 819F
     endchoice
 
     config DEVICE_ID
@@ -25,7 +45,7 @@ menu "TH Sensor Device Configuration"
         default 4001 if SENSOR_2
         default 4002 if SENSOR_3
         default 4003 if SENSOR_4
-        default 4004 if SENSOR_5
+        default 4008 if SENSOR_5
 
     config DEVICE_DESCRIPTION
         string

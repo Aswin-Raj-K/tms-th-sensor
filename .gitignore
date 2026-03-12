@@ -17,7 +17,6 @@ coverage.xml
 htmlcov/
 
 # IDE / editor files
-.vscode/
 .idea/
 
 # OS / misc

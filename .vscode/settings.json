@@ -1,0 +1,8 @@
+{
+    "idf.currentSetup": "C:\\esp\\v5.3.4\\esp-idf",
+    "triggerTaskOnSave.tasks": {
+        "Generate Kconfig from devices.json": [
+            "devices.json"
+        ]
+    }
+}

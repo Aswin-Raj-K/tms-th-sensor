@@ -1,0 +1,35 @@
+{
+  "devices": [
+    {
+      "id": 1,
+      "device_id": 4000,
+      "name": "TH_GR",
+      "description": "Gowning room 819 A"
+    },
+    {
+      "id": 2,
+      "device_id": 4001,
+      "name": "TH_DR",
+      "description": "Deposition room 819C"
+    },
+    {
+      "id": 3,
+      "device_id": 4002,
+      "name": "TH_ER",
+      "description": "Etch room 819D"
+    },
+    {
+      "id": 4,
+      "device_id": 4003,
+      "name": "TH_EBLR",
+      "description": "EBL room 819E"
+    },
+    {
+      "id": 5,
+      "device_id": 4008,
+      "name": "TH_YR",
+      "description": "Yellow room 819F"
+    }
+  ],
+  "default_sensor": 5
+}
