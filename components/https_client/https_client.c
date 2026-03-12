@@ -3,6 +3,7 @@
 
 static const char *TAG = "https_client";
 SemaphoreHandle_t xMutex = NULL;
+static bool tls_connected = false;
 
 // For alarm triggers
 bool temp_high_alarm_triggered = false;
@@ -13,6 +14,11 @@ bool hum_low_alarm_triggered = false;
 // Send JSON data over TLS
 int send_json_data(esp_tls_t *tls, const char *json_data)
 {
+    if (tls == NULL || !tls_connected) {
+        ESP_LOGW(TAG, "TLS is not connected, skipping send");
+        return -1;
+    }
+
     size_t json_len = strlen(json_data);
     char *json_data_with_newline = malloc(json_len + 2);
 
@@ -215,7 +221,7 @@ void send_alarm_triggers(esp_tls_t *tls, cJSON *triggers_array){
 
 void check_trigger(esp_tls_t *tls, float temp, float hum){
 
-   if (tls == NULL) {
+   if (tls == NULL || !tls_connected) {
         return;
     }
 
@@ -515,6 +521,7 @@ void https_data_task(void *pvParameters)
 void https_client_init(void *pvParameters)
 {   
     xMutex = xSemaphoreCreateMutex();
+    tls_connected = false;
     
     esp_tls_t *tls = NULL;
     tls = esp_tls_init();
@@ -558,6 +565,7 @@ void https_client_init(void *pvParameters)
 
             // esp_restart();
 
+            tls_connected = false;
             esp_tls_conn_destroy(tls);
             try+=1;
             continue;
@@ -565,6 +573,7 @@ void https_client_init(void *pvParameters)
         }
 
         ESP_LOGI(TAG, "Connected to server");
+        tls_connected = true;
         break;
 
     }
@@ -598,6 +607,7 @@ void https_client_start(void){
 
 void https_client_destroy(esp_tls_t *tls){
     // Cleanup after the loop
+    tls_connected = false;
     esp_tls_conn_destroy(tls);
     vSemaphoreDelete(xMutex);
     if(!DEBUG){
