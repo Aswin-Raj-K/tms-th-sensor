@@ -30,34 +30,20 @@
 #define KEY_TIME "time"
 
 
+// Device configuration is now set via Kconfig (idf.py menuconfig)
+// or by setting SENSOR_ID environment variable (1-5) before building
+// 
+// Sensor 1: ID=4000, Gowning room 819 A, Name=TH_GR
+// Sensor 2: ID=4001, Deposition room 819C, Name=TH_DR
+// Sensor 3: ID=4002, Etch room 819D, Name=TH_ER
+// Sensor 4: ID=4003, EBL room 819E, Name=TH_EBLR
+// Sensor 5: ID=4004, Yellow room 819F, Name=TH_YR
 
+#include "sdkconfig.h"
 
-// Sensor 1
-// #define DEVICE_ID 4000
-// #define DEVICE_DESCRIPTION "Gowning room 819 A"
-// #define DEVICE_NAME "TH_GR"
-
-//Sensor 2 
-// #define DEVICE_ID 4001
-// #define DEVICE_DESCRIPTION "Deposition room 819C"
-// #define DEVICE_NAME "TH_DR"
-
-//Sensor 3
-// #define DEVICE_ID 4002
-// #define DEVICE_DESCRIPTION "Etch room 819D"
-// #define DEVICE_NAME "TH_ER"
-
-//Sensor 4
-// #define DEVICE_ID 4003
-// #define DEVICE_DESCRIPTION "EBL room 819E"
-// #define DEVICE_NAME "TH_EBLR"
-
-//Sensor 5
-#define DEVICE_ID 4004
-#define DEVICE_DESCRIPTION "Yellow room 819F"
-#define DEVICE_NAME "TH_YR"
-
-
+#define DEVICE_ID CONFIG_DEVICE_ID
+#define DEVICE_DESCRIPTION CONFIG_DEVICE_DESCRIPTION
+#define DEVICE_NAME CONFIG_DEVICE_NAME
 
 
 #define DEVICE_TYPE 4

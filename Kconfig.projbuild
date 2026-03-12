@@ -1,0 +1,46 @@
+menu "TH Sensor Device Configuration"
+
+    choice SENSOR_DEVICE
+        prompt "Select Sensor Device"
+        default SENSOR_5
+        help
+            Select which sensor device to build for.
+            This can also be set via SENSOR_ID environment variable (1-5).
+
+        config SENSOR_1
+            bool "Sensor 1 - Gowning room 819 A"
+        config SENSOR_2
+            bool "Sensor 2 - Deposition room 819C"
+        config SENSOR_3
+            bool "Sensor 3 - Etch room 819D"
+        config SENSOR_4
+            bool "Sensor 4 - EBL room 819E"
+        config SENSOR_5
+            bool "Sensor 5 - Yellow room 819F"
+    endchoice
+
+    config DEVICE_ID
+        int
+        default 4000 if SENSOR_1
+        default 4001 if SENSOR_2
+        default 4002 if SENSOR_3
+        default 4003 if SENSOR_4
+        default 4004 if SENSOR_5
+
+    config DEVICE_DESCRIPTION
+        string
+        default "Gowning room 819 A" if SENSOR_1
+        default "Deposition room 819C" if SENSOR_2
+        default "Etch room 819D" if SENSOR_3
+        default "EBL room 819E" if SENSOR_4
+        default "Yellow room 819F" if SENSOR_5
+
+    config DEVICE_NAME
+        string
+        default "TH_GR" if SENSOR_1
+        default "TH_DR" if SENSOR_2
+        default "TH_ER" if SENSOR_3
+        default "TH_EBLR" if SENSOR_4
+        default "TH_YR" if SENSOR_5
+
+endmenu
